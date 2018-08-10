@@ -1,5 +1,4 @@
 import ballerina/http;
-import ballerina/io;
 
 documentation {
     Check for HTTP response and if response is success parse HTTP response object into json and parse error otherwise.

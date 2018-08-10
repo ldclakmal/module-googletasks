@@ -18,10 +18,6 @@ public type GTasksConnector object {
         R{{}} If success, returns json with of task list, else returns `GTasksError` object
     }
     public function listTaskLists() returns (json|GTasksError);
-    //public function getTaskList(string taskList) returns (json|GTasksError);
-    //public function insertTaskList(string taskList) returns (json|GTasksError);
-    //public function updateTaskList(string taskList) returns (json|GTasksError);
-    //public function deleteTaskList(string taskList) returns (json|GTasksError);
 
     documentation {
         Returns all tasks in the specified task list.
@@ -41,6 +37,11 @@ public type GTasksConnector object {
         R{{}} If success, returns json  else returns `GTasksError` object
     }
     public function updateTask(string taskList, string taskId, json task) returns (json|GTasksError);
+
+    //public function getTaskList(string taskList) returns (json|GTasksError);
+    //public function insertTaskList(string taskList) returns (json|GTasksError);
+    //public function updateTaskList(string taskList) returns (json|GTasksError);
+    //public function deleteTaskList(string taskList) returns (json|GTasksError);
     //public function getTask(string taskList, string task) returns (json|GTasksError);
     //public function insertTask(string taskList) returns (json|GTasksError);
     //public function deleteTask(string taskList, string task) returns (json|GTasksError);
