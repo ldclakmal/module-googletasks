@@ -29,7 +29,9 @@ function testListTaskLists() {
     }
 }
 
-@test:Config
+@test:Config {
+    dependsOn: ["testListTaskLists"]
+}
 function testListTasks() {
     io:println("\n ---------------------------------------------------------------------------");
     log:printInfo("gtasksClient -> listTasks()");
