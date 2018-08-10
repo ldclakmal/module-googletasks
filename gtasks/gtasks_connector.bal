@@ -15,14 +15,20 @@ public type GTasksConnector object {
     documentation {
         Returns all the authenticated user's task lists.
 
-        R{{}} If success, returns account object with basic details, else returns `GTasksError` object
+        R{{}} If success, returns json with of task list, else returns `GTasksError` object
     }
     public function listTaskLists() returns (json|GTasksError);
     //public function getTaskList(string taskList) returns (json|GTasksError);
     //public function insertTaskList(string taskList) returns (json|GTasksError);
     //public function updateTaskList(string taskList) returns (json|GTasksError);
     //public function deleteTaskList(string taskList) returns (json|GTasksError);
-    //
+
+    documentation {
+        Returns all tasks in the specified task list.
+
+        P{{taskList}} Name of the task list
+        R{{}} If success, returns json with  object with basic details, else returns `GTasksError` object
+    }
     public function listTasks(string taskList) returns (json|GTasksError);
     //public function getTask(string taskList, string task) returns (json|GTasksError);
     //public function insertTask(string taskList) returns (json|GTasksError);
