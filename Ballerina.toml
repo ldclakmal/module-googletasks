@@ -1,6 +1,6 @@
 [project]
 org-name = "chanakal"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["Chanaka Lakmal"]
 keywords = ["google tasks", "gtasks", "tasks"]
 repository = "https://github.com/ldclakmal/package-googletasks"

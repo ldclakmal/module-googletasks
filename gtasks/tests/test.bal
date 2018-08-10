@@ -11,8 +11,7 @@ endpoint Client gtasksClient {
             accessToken: config:getAsString("ACCESS_TOKEN"),
             clientId: config:getAsString("CLIENT_ID"),
             clientSecret: config:getAsString("CLIENT_SECRET"),
-            refreshToken: config:getAsString("REFRESH_TOKEN"),
-            refreshUrl: config:getAsString("REFRESH_URL")
+            refreshToken: config:getAsString("REFRESH_TOKEN")
         }
     }
 };
@@ -54,7 +53,7 @@ function testUpdateTasks() {
         "kind": "tasks#task",
         "id": "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
         "etag": "\"FhCqMAsBrrKDkDLKevwtJykQ9I8/LTY2NDI3MjAyNQ\"",
-        "title": "[SCHEDULED] Lunch @ 1:00PM",
+        "title": "[⏰] Lunch @ 1:00PM",
         "updated": "2018-08-10T06:11:36.000Z",
         "selfLink":
         "https://www.googleapis.com/tasks/v1/lists/MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDow/tasks/MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
