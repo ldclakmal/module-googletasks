@@ -27,12 +27,22 @@ public type GTasksConnector object {
         Returns all tasks in the specified task list.
 
         P{{taskList}} Name of the task list
-        R{{}} If success, returns json with  object with basic details, else returns `GTasksError` object
+        R{{}} If success, returns json with details of given task list, else returns `GTasksError` object
     }
     public function listTasks(string taskList) returns (json|GTasksError);
+
+
+    documentation {
+        Updates the specified task.
+
+        P{{taskList}} Name of the task list
+        P{{taskId}} Name of the task
+        P{{task}} Task to be updated as json
+        R{{}} If success, returns json  else returns `GTasksError` object
+    }
+    public function updateTask(string taskList, string taskId, json task) returns (json|GTasksError);
     //public function getTask(string taskList, string task) returns (json|GTasksError);
     //public function insertTask(string taskList) returns (json|GTasksError);
-    //public function updateTask(string taskList, string task) returns (json|GTasksError);
     //public function deleteTask(string taskList, string task) returns (json|GTasksError);
     //public function clearTasks(string taskList) returns (json|GTasksError);
 };
@@ -57,8 +67,29 @@ function GTasksConnector::listTasks(string taskList) returns (json|GTasksError) 
             break;
         }
     }
+    // TODO: check whether taskListId is null
     string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS;
     var response = httpClient->get(requestPath);
+    json jsonResponse = check parseResponseToJson(response);
+    return jsonResponse;
+}
+
+function GTasksConnector::updateTask(string taskList, string taskId, json task) returns (json|GTasksError) {
+    endpoint http:Client httpClient = self.client;
+    json listResponse = check self.listTaskLists();
+    json[] taskListArray = check <json[]>listResponse.items;
+    string taskListId;
+    foreach list in taskListArray {
+        string listTitle = list.title.toString();
+        if (listTitle == taskList) {
+            taskListId = list.id.toString();
+            break;
+        }
+    }
+    string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS + taskId;
+    http:Request req = new;
+    req.setPayload(task);
+    var response = httpClient->put(requestPath, req);
     json jsonResponse = check parseResponseToJson(response);
     return jsonResponse;
 }
