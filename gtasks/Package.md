@@ -50,6 +50,7 @@ You can now enter the credentials in the HTTP client config.
 endpoint gtasks:Client gtasksClient {
     clientConfig: {
         auth: {
+            scheme: http:OAUTH2,
             accessToken: "",
             clientId: "",
             clientSecret: "",
