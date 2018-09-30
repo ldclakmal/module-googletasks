@@ -7,7 +7,7 @@ tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 auth
 
 | Ballerina Language Version  | Google Tasks API Version |
 |:---------------------------:|:------------------------:|
-| 0.981.0                     | v1                       |
+| 0.982.0                     | v1                       |
 
 ## Getting started
 

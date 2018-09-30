@@ -16,7 +16,7 @@ The `chanakal/gtasks` package contains list, get, insert, update, delete, patch 
 ## Compatibility
 |                          |    Version     |
 |:------------------------:|:--------------:|
-| Ballerina Language       | 0.981.0        |
+| Ballerina Language       | 0.982.0        |
 | Google Tasks API         | v1             |
 
 ## Sample
