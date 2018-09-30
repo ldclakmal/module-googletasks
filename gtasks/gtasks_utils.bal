@@ -1,11 +1,9 @@
 import ballerina/http;
 
-documentation {
-    Check for HTTP response and if response is success parse HTTP response object into json and parse error otherwise.
-
-    P{{response}} Http response or HTTP connector error with network related errors
-    R{{}} Json payload or `GTasksError` if anything wrong happen when HTTP client invocation or parsing response to json
-}
+# Check for HTTP response and if response is success parse HTTP response object into json and parse error otherwise.
+#
+# + response - Http response or HTTP connector error with network related errors
+# + return - Json payload or `GTasksError` if anything wrong happen when HTTP client invocation or parsing response to json
 function parseResponseToJson(http:Response|error response) returns (json|GTasksError) {
     json result = {};
     match response {
@@ -35,12 +33,10 @@ function parseResponseToJson(http:Response|error response) returns (json|GTasksE
     }
 }
 
-documentation {
-    Return the untainted value for the given string if it is valid.
-
-    P{{input}} Input string to be validated
-    R{{}} Untainted string or `error` if it is not valid
-}
+# Return the untainted value for the given string if it is valid.
+#
+# + input - Input string to be validated
+# + return - Untainted string or `error` if it is not valid
 function getUntaintedStringIfValid(string input) returns @untainted string {
     boolean isValid = check input.matches(REGEX_STRING);
     if (isValid) {

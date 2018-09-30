@@ -1,41 +1,33 @@
 import ballerina/http;
 import ballerina/mime;
 
-documentation {
-    Object to initialize the connection with Google Tasks.
-
-    F{{accessToken}} Access token of the account
-    F{{client}} Http client endpoint for api
-}
+# Object to initialize the connection with Google Tasks.
+#
+# + accessToken - Access token of the account
+# + client - Http client endpoint for api
 public type GTasksConnector object {
 
     public string accessToken;
     public http:Client client;
 
-    documentation {
-        Returns all the authenticated user's task lists.
-
-        R{{}} If success, returns json with of task list, else returns `GTasksError` object
-    }
+    # Returns all the authenticated user's task lists.
+    #
+    # + return - If success, returns json with of task list, else returns `GTasksError` object
     public function listTaskLists() returns (json|GTasksError);
 
-    documentation {
-        Returns all tasks in the specified task list.
-
-        P{{taskList}} Name of the task list
-        R{{}} If success, returns json with details of given task list, else returns `GTasksError` object
-    }
+    # Returns all tasks in the specified task list.
+    #
+    # + taskList - Name of the task list
+    # + return - If success, returns json with details of given task list, else returns `GTasksError` object
     public function listTasks(string taskList) returns (json|GTasksError);
 
 
-    documentation {
-        Updates the specified task.
-
-        P{{taskList}} Name of the task list
-        P{{taskId}} Name of the task
-        P{{task}} Task to be updated as json
-        R{{}} If success, returns json  else returns `GTasksError` object
-    }
+    # Updates the specified task.
+    #
+    # + taskList - Name of the task list
+    # + taskId - Name of the task
+    # + task - Task to be updated as json
+    # + return - If success, returns json  else returns `GTasksError` object
     public function updateTask(string taskList, string taskId, json task) returns (json|GTasksError);
 
     //public function getTaskList(string taskList) returns (json|GTasksError);

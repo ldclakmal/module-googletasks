@@ -1,34 +1,28 @@
 import ballerina/http;
 
-documentation {
-    Object for GTasks endpoint.
-
-    F{{gtasksConnector}} Reference to GTasksConnector type
-}
+# Object for GTasks endpoint.
+#
+# + gtasksConnector - Reference to GTasksConnector type
 public type Client object {
 
     public GTasksConnector gtasksConnector = new;
 
-    documentation {
-        Initialize GTasks endpoint.
-
-        P{{gtasksConfig}} GTasks configuraion
-    }
+    # Initialize GTasks endpoint.
+    #
+    # + gtasksConfig - GTasks configuraion
     public function init(GTasksConfiguration gtasksConfig);
 
-    documentation {
-        Initialize GTasks endpoint.
-
-        R{{}} The GTasks connector object
-    }
+    # Initialize GTasks endpoint.
+    #
+    # + return - The GTasks connector object
     public function getCallerActions() returns GTasksConnector;
 
 };
 
-documentation {
-    F{{accessToken}} Access token of the account
-    F{{clientConfig}} The http client endpoint
-}
+# Object for GTasks configuration.
+#
+# + accessToken - Access token of the account
+# + clientConfig - The http client endpoint
 public type GTasksConfiguration record {
     string accessToken;
     http:ClientEndpointConfig clientConfig;
