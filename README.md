@@ -7,13 +7,13 @@ tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 auth
 
 | Ballerina Language Version  | Google Tasks API Version |
 |:---------------------------:|:------------------------:|
-| 0.982.0                     | v1                       |
+| 0.983.0                     | v1                       |
 
 ## Getting started
 
 > Refer the [Getting Started](https://ballerina.io/learn/getting-started/) guide to download and install Ballerina.
 
-Import the `chanakal/gtasks` package into the Ballerina project.
+Import the `chanakal/gtasks` module into the Ballerina project.
 ```ballerina
 import chanakal/gtasks;
 ```
