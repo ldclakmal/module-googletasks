@@ -4,7 +4,7 @@ import ballerina/test;
 import ballerina/config;
 import ballerina/http;
 
-GTasksConfiguration gtasksConfig = {
+GTasksConfiguration gTasksConfig = {
     clientConfig: {
         auth: {
             scheme: http:OAUTH2,
@@ -16,14 +16,14 @@ GTasksConfiguration gtasksConfig = {
     }
 };
 
-Client gtasksClient = new(gtasksConfig);
+Client gTasksClient = new(gTasksConfig);
 
 @test:Config
 function testListTaskLists() {
     io:println("\n ---------------------------------------------------------------------------");
-    log:printInfo("gtasksClient -> listTaskLists()");
+    log:printInfo("gTasksClient -> listTaskLists()");
 
-    var details = gtasksClient->listTaskLists();
+    var details = gTasksClient->listTaskLists();
     match details {
         json response => io:println(response);
         error err => test:assertFail(msg = <string>err.detail().message);
@@ -35,9 +35,9 @@ function testListTaskLists() {
 }
 function testListTasks() {
     io:println("\n ---------------------------------------------------------------------------");
-    log:printInfo("gtasksClient -> listTasks()");
+    log:printInfo("gTasksClient -> listTasks()");
 
-    var details = gtasksClient->listTasks("BallerinaDay");
+    var details = gTasksClient->listTasks("BallerinaDay");
     match details {
         json response => io:println(response);
         error err => test:assertFail(msg = <string>err.detail().message);
@@ -49,7 +49,7 @@ function testListTasks() {
 }
 function testUpdateTasks() {
     io:println("\n ---------------------------------------------------------------------------");
-    log:printInfo("gtasksClient -> testUpdateTasks()");
+    log:printInfo("gTasksClient -> testUpdateTasks()");
 
     json task = {
         "kind": "tasks#task",
@@ -63,7 +63,7 @@ function testUpdateTasks() {
         "status": "needsAction"
     };
 
-    var details = gtasksClient->updateTask("BallerinaDay",
+    var details = gTasksClient->updateTask("BallerinaDay",
         "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
     match details {
         json response => io:println(response);

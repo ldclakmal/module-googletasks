@@ -2,28 +2,28 @@ import ballerina/http;
 
 # Object for GTasks endpoint.
 #
-# + gtasksConnector - Reference to GTasksConnector type
+# + gTasksConnector - Reference to GTasksConnector type
 public type Client client object {
 
-    public GTasksConnector gtasksConnector;
-    private GTasksConfiguration gtasksConfig;
+    public GTasksConnector gTasksConnector;
+    private GTasksConfiguration gTasksConfig;
 
-    public function __init(GTasksConfiguration gtasksConfig) {
-        self.init(gtasksConfig);
-        self.gtasksConfig = gtasksConfig;
-        self.gtasksConnector = new(gtasksConfig.clientConfig);
+    public function __init(GTasksConfiguration gTasksConfig) {
+        self.init(gTasksConfig);
+        self.gTasksConfig = gTasksConfig;
+        self.gTasksConnector = new(gTasksConfig.clientConfig);
     }
 
     # Initialize GTasks endpoint.
     #
-    # + gtasksConfig - GTasks configuraion
-    public function init(GTasksConfiguration gtasksConfig);
+    # + gTasksConfig - GTasks configuraion
+    public function init(GTasksConfiguration gTasksConfig);
 
     # Returns all the authenticated user's task lists.
     #
     # + return - If success, returns json with of task list, else returns `GTasksError` object
     public remote function listTaskLists() returns json|error {
-        return self.gtasksConnector->listTaskLists();
+        return self.gTasksConnector->listTaskLists();
     }
 
     # Returns all tasks in the specified task list.
@@ -31,7 +31,7 @@ public type Client client object {
     # + taskList - Name of the task list
     # + return - If success, returns json with details of given task list, else returns `GTasksError` object
     public remote function listTasks(string taskList) returns json|error {
-        return self.gtasksConnector->listTasks(taskList);
+        return self.gTasksConnector->listTasks(taskList);
     }
 
     # Updates the specified task.
@@ -41,7 +41,7 @@ public type Client client object {
     # + task - Task to be updated as json
     # + return - If success, returns json  else returns `GTasksError` object
     public remote function updateTask(string taskList, string taskId, json task) returns json|error {
-        return self.gtasksConnector->updateTask(taskList, taskId, task);
+        return self.gTasksConnector->updateTask(taskList, taskId, task);
     }
 };
 
@@ -53,10 +53,10 @@ public type GTasksConfiguration record {
     http:ClientEndpointConfig clientConfig;
 };
 
-function Client.init(GTasksConfiguration gtasksConfig) {
-    http:AuthConfig? authConfig = gtasksConfig.clientConfig.auth;
+function Client.init(GTasksConfiguration gTasksConfig) {
+    http:AuthConfig? authConfig = gTasksConfig.clientConfig.auth;
     if (authConfig is http:AuthConfig) {
         authConfig.refreshUrl = REFRESH_URL;
     }
-    gtasksConfig.clientConfig.url = GTASKS_API_URL;
+    gTasksConfig.clientConfig.url = GTASKS_API_URL;
 }

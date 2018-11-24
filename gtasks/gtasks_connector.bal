@@ -7,10 +7,10 @@ import ballerina/mime;
 # + client - Http client endpoint for api
 public type GTasksConnector client object {
 
-    public http:Client gtaskClient;
+    public http:Client gTasksClient;
 
     public function __init(http:ClientEndpointConfig config) {
-        self.gtaskClient = new(config);
+        self.gTasksClient = new(config);
     }
 
     # Returns all the authenticated user's task lists.
@@ -37,7 +37,7 @@ public type GTasksConnector client object {
 };
 
 remote function GTasksConnector.listTaskLists() returns json|error {
-    http:Client httpClient = self.gtaskClient;
+    http:Client httpClient = self.gTasksClient;
     string requestPath = TASK_LISTS_API;
     var response = httpClient->get(requestPath);
     var jsonResponse = parseResponseToJson(response);
@@ -45,7 +45,7 @@ remote function GTasksConnector.listTaskLists() returns json|error {
 }
 
 remote function GTasksConnector.listTasks(string taskList) returns json|error {
-    http:Client httpClient = self.gtaskClient;
+    http:Client httpClient = self.gTasksClient;
     string taskListId = check self.getTaskListId(taskList);
     string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS;
     var response = httpClient->get(requestPath);
@@ -54,7 +54,7 @@ remote function GTasksConnector.listTasks(string taskList) returns json|error {
 }
 
 remote function GTasksConnector.updateTask(string taskList, string taskId, json task) returns json|error {
-    http:Client httpClient = self.gtaskClient;
+    http:Client httpClient = self.gTasksClient;
     string taskListId = check self.getTaskListId(taskList);
     string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS + taskId;
     http:Request req = new;
