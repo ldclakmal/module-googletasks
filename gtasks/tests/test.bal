@@ -4,7 +4,7 @@ import ballerina/test;
 import ballerina/config;
 import ballerina/http;
 
-endpoint Client gtasksClient {
+GTasksConfiguration gtasksConfig = {
     clientConfig: {
         auth: {
             scheme: http:OAUTH2,
@@ -16,6 +16,8 @@ endpoint Client gtasksClient {
     }
 };
 
+Client gtasksClient = new(gtasksConfig);
+
 @test:Config
 function testListTaskLists() {
     io:println("\n ---------------------------------------------------------------------------");
@@ -24,7 +26,7 @@ function testListTaskLists() {
     var details = gtasksClient->listTaskLists();
     match details {
         json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+        error err => test:assertFail(msg = <string>err.detail().message);
     }
 }
 
@@ -38,7 +40,7 @@ function testListTasks() {
     var details = gtasksClient->listTasks("BallerinaDay");
     match details {
         json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+        error err => test:assertFail(msg = <string>err.detail().message);
     }
 }
 
@@ -65,6 +67,6 @@ function testUpdateTasks() {
         "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
     match details {
         json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+        error err => test:assertFail(msg = <string>err.detail().message);
     }
 }
