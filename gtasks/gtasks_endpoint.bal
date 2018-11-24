@@ -3,20 +3,46 @@ import ballerina/http;
 # Object for GTasks endpoint.
 #
 # + gtasksConnector - Reference to GTasksConnector type
-public type Client object {
+public type Client client object {
 
-    public GTasksConnector gtasksConnector = new;
+    public GTasksConnector gtasksConnector;
+    private GTasksConfiguration gtasksConfig;
+
+    public function __init(GTasksConfiguration gtasksConfig) {
+        self.init(gtasksConfig);
+        self.gtasksConfig = gtasksConfig;
+        self.gtasksConnector = new(gtasksConfig.clientConfig);
+    }
 
     # Initialize GTasks endpoint.
     #
     # + gtasksConfig - GTasks configuraion
     public function init(GTasksConfiguration gtasksConfig);
 
-    # Initialize GTasks endpoint.
+    # Returns all the authenticated user's task lists.
     #
-    # + return - The GTasks connector object
-    public function getCallerActions() returns GTasksConnector;
+    # + return - If success, returns json with of task list, else returns `GTasksError` object
+    public remote function listTaskLists() returns json|error {
+        return self.gtasksConnector->listTaskLists();
+    }
 
+    # Returns all tasks in the specified task list.
+    #
+    # + taskList - Name of the task list
+    # + return - If success, returns json with details of given task list, else returns `GTasksError` object
+    public remote function listTasks(string taskList) returns json|error {
+        return self.gtasksConnector->listTasks(taskList);
+    }
+
+    # Updates the specified task.
+    #
+    # + taskList - Name of the task list
+    # + taskId - Name of the task
+    # + task - Task to be updated as json
+    # + return - If success, returns json  else returns `GTasksError` object
+    public remote function updateTask(string taskList, string taskId, json task) returns json|error {
+        return self.gtasksConnector->updateTask(taskList, taskId, task);
+    }
 };
 
 # Object for GTasks configuration.
@@ -24,22 +50,13 @@ public type Client object {
 # + accessToken - Access token of the account
 # + clientConfig - The http client endpoint
 public type GTasksConfiguration record {
-    string accessToken;
     http:ClientEndpointConfig clientConfig;
 };
 
-function Client::init(GTasksConfiguration gtasksConfig) {
-    http:AuthConfig? auth = gtasksConfig.clientConfig.auth;
-    match auth {
-        http:AuthConfig authConfig => {
-            authConfig.refreshUrl = REFRESH_URL;
-        }
-        () => {}
+function Client.init(GTasksConfiguration gtasksConfig) {
+    http:AuthConfig? authConfig = gtasksConfig.clientConfig.auth;
+    if (authConfig is http:AuthConfig) {
+        authConfig.refreshUrl = REFRESH_URL;
     }
     gtasksConfig.clientConfig.url = GTASKS_API_URL;
-    self.gtasksConnector.client.init(gtasksConfig.clientConfig);
-}
-
-function Client::getCallerActions() returns GTasksConnector {
-    return self.gtasksConnector;
 }
