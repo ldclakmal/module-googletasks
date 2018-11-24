@@ -47,7 +47,7 @@ and access token.
 
 You can now enter the credentials in the HTTP client config.
 ```ballerina
-GTasksConfiguration gTasksConfig = {
+gtasks:GTasksConfiguration gTasksConfig = {
     clientConfig: {
         auth: {
             scheme: http:OAUTH2,
@@ -59,7 +59,7 @@ GTasksConfiguration gTasksConfig = {
     }
 };
 
-Client gTasksClient = new(gTasksConfig);
+gtasks:Client gTasksClient = new(gTasksConfig);
 ```
 
 The `listTaskLists` function returns the information about the task lists.
