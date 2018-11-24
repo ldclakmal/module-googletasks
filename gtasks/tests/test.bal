@@ -23,10 +23,11 @@ function testListTaskLists() {
     io:println("\n ---------------------------------------------------------------------------");
     log:printInfo("gTasksClient -> listTaskLists()");
 
-    var details = gTasksClient->listTaskLists();
-    match details {
-        json response => io:println(response);
-        error err => test:assertFail(msg = <string>err.detail().message);
+    var response = gTasksClient->listTaskLists();
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 }
 
@@ -37,10 +38,11 @@ function testListTasks() {
     io:println("\n ---------------------------------------------------------------------------");
     log:printInfo("gTasksClient -> listTasks()");
 
-    var details = gTasksClient->listTasks("BallerinaDay");
-    match details {
-        json response => io:println(response);
-        error err => test:assertFail(msg = <string>err.detail().message);
+    var response = gTasksClient->listTasks("BallerinaDay");
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 }
 
@@ -63,10 +65,11 @@ function testUpdateTasks() {
         "status": "needsAction"
     };
 
-    var details = gTasksClient->updateTask("BallerinaDay",
+    var response = gTasksClient->updateTask("BallerinaDay",
         "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
-    match details {
-        json response => io:println(response);
-        error err => test:assertFail(msg = <string>err.detail().message);
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 }
