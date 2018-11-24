@@ -3,8 +3,7 @@ import ballerina/mime;
 
 # Object to initialize the connection with Google Tasks.
 #
-# + accessToken - Access token of the account
-# + client - Http client endpoint for api
+# + gTasksClient - Http client endpoint for api
 public type GTasksConnector client object {
 
     public http:Client gTasksClient;
@@ -13,23 +12,10 @@ public type GTasksConnector client object {
         self.gTasksClient = new(config);
     }
 
-    # Returns all the authenticated user's task lists.
-    #
-    # + return - If success, returns json with of task list, else returns `GTasksError` object
     remote function listTaskLists() returns json|error;
 
-    # Returns all tasks in the specified task list.
-    #
-    # + taskList - Name of the task list
-    # + return - If success, returns json with details of given task list, else returns `GTasksError` object
     remote function listTasks(string taskList) returns json|error;
 
-    # Updates the specified task.
-    #
-    # + taskList - Name of the task list
-    # + taskId - Name of the task
-    # + task - Task to be updated as json
-    # + return - If success, returns json  else returns `GTasksError` object
     remote function updateTask(string taskList, string taskId, json task) returns json|error;
 
     // This function is for internal usage in order to get the id of the given task list.

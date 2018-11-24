@@ -3,7 +3,7 @@ import ballerina/http;
 # Check for HTTP response and if response is success parse HTTP response object into json and parse error otherwise.
 #
 # + response - Http response or HTTP connector error with network related errors
-# + return - Json payload or `GTasksError` if anything wrong happen when HTTP client invocation or parsing response to json
+# + return - Json payload or `error` if anything wrong happen when HTTP client invocation or parsing response to json
 function parseResponseToJson(http:Response|error response) returns json|error {
     json result = {};
     if (response is http:Response) {

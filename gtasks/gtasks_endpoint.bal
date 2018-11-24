@@ -21,7 +21,7 @@ public type Client client object {
 
     # Returns all the authenticated user's task lists.
     #
-    # + return - If success, returns json with of task list, else returns `GTasksError` object
+    # + return - If success, returns json with of task list, else returns `error` object
     public remote function listTaskLists() returns json|error {
         return self.gTasksConnector->listTaskLists();
     }
@@ -29,7 +29,7 @@ public type Client client object {
     # Returns all tasks in the specified task list.
     #
     # + taskList - Name of the task list
-    # + return - If success, returns json with details of given task list, else returns `GTasksError` object
+    # + return - If success, returns json with details of given task list, else returns `error` object
     public remote function listTasks(string taskList) returns json|error {
         return self.gTasksConnector->listTasks(taskList);
     }
@@ -39,7 +39,7 @@ public type Client client object {
     # + taskList - Name of the task list
     # + taskId - Name of the task
     # + task - Task to be updated as json
-    # + return - If success, returns json  else returns `GTasksError` object
+    # + return - If success, returns json  else returns `error` object
     public remote function updateTask(string taskList, string taskId, json task) returns json|error {
         return self.gTasksConnector->updateTask(taskList, taskId, task);
     }
@@ -47,7 +47,6 @@ public type Client client object {
 
 # Object for GTasks configuration.
 #
-# + accessToken - Access token of the account
 # + clientConfig - The http client endpoint
 public type GTasksConfiguration record {
     http:ClientEndpointConfig clientConfig;
