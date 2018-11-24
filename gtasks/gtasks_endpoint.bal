@@ -6,11 +6,9 @@ import ballerina/http;
 public type Client client object {
 
     public GTasksConnector gTasksConnector;
-    private GTasksConfiguration gTasksConfig;
 
     public function __init(GTasksConfiguration gTasksConfig) {
         self.init(gTasksConfig);
-        self.gTasksConfig = gTasksConfig;
         self.gTasksConnector = new(gTasksConfig.clientConfig);
     }
 

@@ -1,5 +1,4 @@
 import ballerina/http;
-import ballerina/mime;
 
 # Object to initialize the connection with Google Tasks.
 #
