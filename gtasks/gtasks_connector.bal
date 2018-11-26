@@ -7,8 +7,8 @@ public type GTasksConnector client object {
 
     public http:Client gTasksClient;
 
-    public function __init(http:ClientEndpointConfig config) {
-        self.gTasksClient = new(config);
+    public function __init(string url, http:ClientEndpointConfig config) {
+        self.gTasksClient = new(url, config = config);
     }
 
     remote function listTaskLists() returns json|error;

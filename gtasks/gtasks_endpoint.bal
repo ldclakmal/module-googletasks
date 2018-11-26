@@ -9,7 +9,7 @@ public type Client client object {
 
     public function __init(GTasksConfiguration gTasksConfig) {
         self.init(gTasksConfig);
-        self.gTasksConnector = new(gTasksConfig.clientConfig);
+        self.gTasksConnector = new(GTASKS_API_URL, gTasksConfig.clientConfig);
     }
 
     # Initialize GTasks endpoint.
@@ -55,5 +55,4 @@ function Client.init(GTasksConfiguration gTasksConfig) {
     if (authConfig is http:AuthConfig) {
         authConfig.refreshUrl = REFRESH_URL;
     }
-    gTasksConfig.clientConfig.url = GTASKS_API_URL;
 }
