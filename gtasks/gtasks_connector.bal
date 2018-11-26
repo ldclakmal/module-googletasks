@@ -31,53 +31,37 @@ remote function GTasksConnector.listTaskLists() returns json|error {
 
 remote function GTasksConnector.listTasks(string taskList) returns json|error {
     http:Client httpClient = self.gTasksClient;
-    var taskListIdResult = self.getTaskListId(taskList);
-    if (taskListIdResult is string) {
-        string requestPath = TASKS_API + getUntaintedStringIfValid(taskListIdResult) + TASKS_API_TASKS;
-        var response = httpClient->get(requestPath);
-        return parseResponseToJson(response);
-    } else {
-        return taskListIdResult;
-    }
+    string taskListId = check self.getTaskListId(taskList);
+    string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS;
+    var response = httpClient->get(requestPath);
+    return parseResponseToJson(response);
 }
 
 remote function GTasksConnector.updateTask(string taskList, string taskId, json task) returns json|error {
     http:Client httpClient = self.gTasksClient;
-    var taskListIdResult = self.getTaskListId(taskList);
-    if (taskListIdResult is string) {
-        string requestPath = TASKS_API + getUntaintedStringIfValid(taskListIdResult) + TASKS_API_TASKS + taskId;
-        http:Request req = new;
-        req.setPayload(task);
-        var response = httpClient->put(untaint requestPath, req);
-        return parseResponseToJson(response);
-    } else {
-        return taskListIdResult;
-    }
+    string taskListId = check self.getTaskListId(taskList);
+    string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS + taskId;
+    http:Request req = new;
+    req.setPayload(task);
+    var response = httpClient->put(untaint requestPath, req);
+    return parseResponseToJson(response);
 }
 
 function GTasksConnector.getTaskListId(string taskList) returns string|error {
-    var listResponse = self->listTaskLists();
-    if (listResponse is json) {
-        var taskListArray = <json[]>listResponse.items;
-        if (taskListArray is error) {
-            return taskListArray;
-        } else {
-            string taskListId = "";
-            foreach list in taskListArray {
-                string listTitle = list.title.toString();
-                if (listTitle == taskList) {
-                    taskListId = list.id.toString();
-                    break;
-                }
-            }
-            if (taskListId == EMPTY_STRING) {
-                map details = { message: "No matching task-list found with given name: " + taskList };
-                error err = error(GTASK_ERROR_CODE, details);
-                return err;
-            }
-            return taskListId;
+    json listResponse = check self->listTaskLists();
+    json[] taskListArray = check <json[]>listResponse.items;
+    string taskListId = "";
+    foreach list in taskListArray {
+        string listTitle = list.title.toString();
+        if (listTitle == taskList) {
+            taskListId = list.id.toString();
+            break;
         }
-    } else {
-        return listResponse;
     }
+    if (taskListId == EMPTY_STRING) {
+        map details = { message: "No matching task-list found with given name: " + taskList };
+        error err = error(GTASK_ERROR_CODE, details);
+        return err;
+    }
+    return taskListId;
 }
