@@ -10,19 +10,19 @@ function parseResponseToJson(http:Response|error response) returns json|error {
         var jsonPayload = response.getJsonPayload();
         if (jsonPayload is json) {
             if (response.statusCode != http:OK_200 && response.statusCode != http:CREATED_201) {
-                map details = { message: response.statusCode + WHITE_SPACE
+                map<string> details = { message: response.statusCode + WHITE_SPACE
                     + response.reasonPhrase + DASH_WITH_WHITE_SPACES_SYMBOL + jsonPayload.toString() };
                 error err = error(GTASK_ERROR_CODE, details);
                 return err;
             }
             return jsonPayload;
         } else {
-            map details = { message: "Error occurred when parsing response to json." };
+            map<string> details = { message: "Error occurred when parsing response to json." };
             error err = error(GTASK_ERROR_CODE, details);
             return err;
         }
     } else {
-        map details = { message: response.detail().message };
+        map<string> details = { message: <string>response.detail().message };
         error err = error(GTASK_ERROR_CODE, details);
         return err;
     }
@@ -38,7 +38,7 @@ function getUntaintedStringIfValid(string input) returns @untainted string {
         if (matchResponse) {
             return input;
         } else {
-            map details = { message: "Validation error: Input '" + input + "' should be valid." };
+            map<string> details = { message: "Validation error: Input '" + input + "' should be valid." };
             error err = error(GTASK_ERROR_CODE, details);
             panic err;
         }

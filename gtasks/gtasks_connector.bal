@@ -49,7 +49,7 @@ remote function GTasksConnector.updateTask(string taskList, string taskId, json 
 
 function GTasksConnector.getTaskListId(string taskList) returns string|error {
     json listResponse = check self->listTaskLists();
-    json[] taskListArray = check <json[]>listResponse.items;
+    json[] taskListArray = <json[]>listResponse.items;
     string taskListId = "";
     foreach list in taskListArray {
         string listTitle = list.title.toString();
@@ -59,7 +59,7 @@ function GTasksConnector.getTaskListId(string taskList) returns string|error {
         }
     }
     if (taskListId == EMPTY_STRING) {
-        map details = { message: "No matching task-list found with given name: " + taskList };
+        map<string> details = { message: "No matching task-list found with given name: " + taskList };
         error err = error(GTASK_ERROR_CODE, details);
         return err;
     }
