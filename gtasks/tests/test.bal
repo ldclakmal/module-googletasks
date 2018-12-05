@@ -4,7 +4,7 @@ import ballerina/test;
 import ballerina/config;
 import ballerina/http;
 
-endpoint Client gtasksClient {
+GTasksConfiguration gTasksConfig = {
     clientConfig: {
         auth: {
             scheme: http:OAUTH2,
@@ -16,15 +16,18 @@ endpoint Client gtasksClient {
     }
 };
 
+Client gTasksClient = new(gTasksConfig);
+
 @test:Config
 function testListTaskLists() {
     io:println("\n ---------------------------------------------------------------------------");
-    log:printInfo("gtasksClient -> listTaskLists()");
+    log:printInfo("gTasksClient -> listTaskLists()");
 
-    var details = gtasksClient->listTaskLists();
-    match details {
-        json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->listTaskLists();
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 }
 
@@ -33,12 +36,13 @@ function testListTaskLists() {
 }
 function testListTasks() {
     io:println("\n ---------------------------------------------------------------------------");
-    log:printInfo("gtasksClient -> listTasks()");
+    log:printInfo("gTasksClient -> listTasks()");
 
-    var details = gtasksClient->listTasks("BallerinaDay");
-    match details {
-        json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->listTasks("BallerinaDay");
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 }
 
@@ -47,7 +51,7 @@ function testListTasks() {
 }
 function testUpdateTasks() {
     io:println("\n ---------------------------------------------------------------------------");
-    log:printInfo("gtasksClient -> testUpdateTasks()");
+    log:printInfo("gTasksClient -> testUpdateTasks()");
 
     json task = {
         "kind": "tasks#task",
@@ -61,10 +65,11 @@ function testUpdateTasks() {
         "status": "needsAction"
     };
 
-    var details = gtasksClient->updateTask("BallerinaDay",
+    var response = gTasksClient->updateTask("BallerinaDay",
         "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
-    match details {
-        json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 }

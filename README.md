@@ -7,7 +7,7 @@ tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 auth
 
 | Ballerina Language Version  | Google Tasks API Version |
 |:---------------------------:|:------------------------:|
-| 0.983.0                     | v1                       |
+| 0.990.0                     | v1                       |
 
 ## Getting started
 
@@ -40,7 +40,7 @@ and access token.
 
 You can now enter the credentials in the HTTP client config.
 ```ballerina
-endpoint gtasks:Client gtasksClient {
+gtasks:GTasksConfiguration gTasksConfig = {
     clientConfig: {
         auth: {
             scheme: http:OAUTH2,
@@ -51,23 +51,27 @@ endpoint gtasks:Client gtasksClient {
         }
     }
 };
+
+gtasks:Client gTasksClient = new(gTasksConfig);
 ```
 
 The `listTaskLists` function returns the information about the task lists.
 ```ballerina
-    var details = gtasksClient->listTaskLists();
-    match details {
-        json response => io:println(response);
-        gtasks:GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->listTaskLists();
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 ```
 
 The `listTasks` function returns the information about the tasks of the given task list.
 ```ballerina
-    var details = gtasksClient->listTasks("BallerinaDay");
-    match details {
-        json response => io:println(response);
-        gtasks:GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->listTasks("BallerinaDay");
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 ```
 
@@ -80,15 +84,18 @@ The `updateTask` function returns the information about the updated task for the
         "title": "[SCHEDULED] Lunch @ 1:00PM",
         "updated": "2018-08-10T06:11:36.000Z",
         "selfLink":
-        "https://www.googleapis.com/tasks/v1/lists/MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDow/tasks/MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
+            "https://www.googleapis.com/tasks/v1/lists/
+            MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDow/tasks/
+            MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
         "position": "00000000000975315488",
         "status": "needsAction"
     };
 
-    var details = gtasksClient->updateTask("BallerinaDay",
+    var response = gTasksClient->updateTask("BallerinaDay",
         "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
-    match details {
-        json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 ```

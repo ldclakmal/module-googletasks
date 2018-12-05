@@ -16,7 +16,7 @@ The `chanakal/gtasks` module contains list, get, insert, update, delete, patch o
 ## Compatibility
 |                          |    Version     |
 |:------------------------:|:--------------:|
-| Ballerina Language       | 0.983.0        |
+| Ballerina Language       | 0.990.0        |
 | Google Tasks API         | v1             |
 
 ## Sample
@@ -47,7 +47,7 @@ and access token.
 
 You can now enter the credentials in the HTTP client config.
 ```ballerina
-endpoint gtasks:Client gtasksClient {
+gtasks:GTasksConfiguration gTasksConfig = {
     clientConfig: {
         auth: {
             scheme: http:OAUTH2,
@@ -58,23 +58,27 @@ endpoint gtasks:Client gtasksClient {
         }
     }
 };
+
+gtasks:Client gTasksClient = new(gTasksConfig);
 ```
 
 The `listTaskLists` function returns the information about the task lists.
 ```ballerina
-    var details = gtasksClient->listTaskLists();
-    match details {
-        json response => io:println(response);
-        gtasks:GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->listTaskLists();
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 ```
 
 The `listTasks` function returns the information about the tasks of the given task list.
 ```ballerina
-    var details = gtasksClient->listTasks("BallerinaDay");
-    match details {
-        json response => io:println(response);
-        gtasks:GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->listTasks("BallerinaDay");
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 ```
 
@@ -82,8 +86,7 @@ The `updateTask` function returns the information about the updated task for the
 ```ballerina
     json task = {
         "kind": "tasks#task",
-        "id":
-            "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
+        "id": "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
         "etag": "\"FhCqMAsBrrKDkDLKevwtJykQ9I8/LTY2NDI3MjAyNQ\"",
         "title": "[SCHEDULED] Lunch @ 1:00PM",
         "updated": "2018-08-10T06:11:36.000Z",
@@ -95,11 +98,11 @@ The `updateTask` function returns the information about the updated task for the
         "status": "needsAction"
     };
 
-    var details = gtasksClient->updateTask("BallerinaDay",
-        "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
-        task);
-    match details {
-        json response => io:println(response);
-        GTasksError gtasksError => test:assertFail(msg = gtasksError.message);
+    var response = gTasksClient->updateTask("BallerinaDay",
+        "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
+    if (response is json) {
+        io:println(response);
+    } else {
+        test:assertFail(msg = <string>response.detail().message);
     }
 ```
