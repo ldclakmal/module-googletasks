@@ -53,7 +53,7 @@ function Client.init(GTasksConfiguration gTasksConfig) {
     }
 }
 
-remote function Client.listTaskLists() returns json|error {
+public remote function Client.listTaskLists() returns json|error {
     http:Client httpClient = self.gTasksClient;
     string requestPath = TASK_LISTS_API;
     var response = httpClient->get(requestPath);
@@ -61,7 +61,7 @@ remote function Client.listTaskLists() returns json|error {
     return jsonResponse;
 }
 
-remote function Client.listTasks(string taskList) returns json|error {
+public remote function Client.listTasks(string taskList) returns json|error {
     http:Client httpClient = self.gTasksClient;
     string taskListId = check self->getTaskListId(taskList);
     string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS;
@@ -69,7 +69,7 @@ remote function Client.listTasks(string taskList) returns json|error {
     return parseResponseToJson(response);
 }
 
-remote function Client.updateTask(string taskList, string taskId, json task) returns json|error {
+public remote function Client.updateTask(string taskList, string taskId, json task) returns json|error {
     http:Client httpClient = self.gTasksClient;
     string taskListId = check self->getTaskListId(taskList);
     string requestPath = TASKS_API + getUntaintedStringIfValid(taskListId) + TASKS_API_TASKS + taskId;
