@@ -16,7 +16,7 @@ The `chanakal/gtasks` module contains list, get, insert, update, delete, patch o
 ## Compatibility
 |                          |    Version     |
 |:------------------------:|:--------------:|
-| Ballerina Language       | 0.990.3        |
+| Ballerina Language       | 0.991.0        |
 | Google Tasks API         | v1             |
 
 ## Sample
@@ -45,18 +45,13 @@ select the required GTask API scopes, and then click **Authorize APIs**.
 7. When you receive your authorization code, click **Exchange authorization code for tokens** to obtain the refresh token
 and access token.
 
-You can now enter the credentials in the HTTP client config.
+You can now enter the credentials in the GTasks config.
 ```ballerina
-gtasks:GTasksConfiguration gTasksConfig = {
-    clientConfig: {
-        auth: {
-            scheme: http:OAUTH2,
-            accessToken: "",
-            clientId: "",
-            clientSecret: "",
-            refreshToken: ""
-        }
-    }
+GTasksConfiguration gTasksConfig = {
+    accessToken: "",
+    clientId: "",
+    clientSecret: "",
+    refreshToken: ""
 };
 
 gtasks:Client gTasksClient = new(gTasksConfig);

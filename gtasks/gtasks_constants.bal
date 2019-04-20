@@ -1,19 +1,19 @@
 // Google Tasks API urls
-final string GTASKS_API_URL = "https://www.googleapis.com/tasks/v1";
-final string REFRESH_URL = "https://www.googleapis.com/oauth2/v4/token";
-final string TASK_LISTS_API = "/users/@me/lists";
-final string TASKS_API = "/lists/";
-final string TASKS_API_TASKS = "/tasks/";
-final string TAGS_INFO = "/tags/";
+const string GTASKS_API_URL = "https://www.googleapis.com/tasks/v1";
+const string REFRESH_URL = "https://www.googleapis.com/oauth2/v4/token";
+const string TASK_LISTS_API = "/users/@me/lists";
+const string TASKS_API = "/lists/";
+const string TASKS_API_TASKS = "/tasks/";
+const string TAGS_INFO = "/tags/";
 
 // REGEX
-final string REGEX_STRING = "[a-zA-Z0-9]*";
+const string REGEX_STRING = "[a-zA-Z0-9]*";
 
 // Symbols
-final string EMPTY_STRING = "";
-final string WHITE_SPACE = " ";
-final string FORWARD_SLASH = "/";
-final string DASH_WITH_WHITE_SPACES_SYMBOL = " - ";
+const string EMPTY_STRING = "";
+const string WHITE_SPACE = " ";
+const string FORWARD_SLASH = "/";
+const string DASH_WITH_WHITE_SPACES_SYMBOL = " - ";
 
 // Error Codes
-final string GTASK_ERROR_CODE = "(chanakal/gtask)GTaskError";
+const string GTASK_ERROR_CODE = "(chanakal/gtask)GTaskError";

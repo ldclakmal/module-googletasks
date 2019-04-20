@@ -7,7 +7,7 @@ tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 auth
 
 | Ballerina Language Version  | Google Tasks API Version |
 |:---------------------------:|:------------------------:|
-| 0.990.3                     | v1                       |
+| 0.991.0                     | v1                       |
 
 ## Getting started
 
@@ -38,18 +38,13 @@ select the required GTask API scopes, and then click **Authorize APIs**.
 7. When you receive your authorization code, click **Exchange authorization code for tokens** to obtain the refresh token
 and access token.
 
-You can now enter the credentials in the HTTP client config.
+You can now enter the credentials in the GTasks config.
 ```ballerina
-gtasks:GTasksConfiguration gTasksConfig = {
-    clientConfig: {
-        auth: {
-            scheme: http:OAUTH2,
-            accessToken: "",
-            clientId: "",
-            clientSecret: "",
-            refreshToken: ""
-        }
-    }
+GTasksConfiguration gTasksConfig = {
+    accessToken: "",
+    clientId: "",
+    clientSecret: "",
+    refreshToken: ""
 };
 
 gtasks:Client gTasksClient = new(gTasksConfig);

@@ -41,16 +41,43 @@ public type Client client object {
 
 # Object for GTasks configuration.
 #
-# + clientConfig - The http client endpoint
+# + accessToken - The OAuth2 access token
+# + clientId - The OAuth2 client id
+# + clientSecret - The OAuth2 client secret
+# + refreshToken - The OAuth2 refresh token
+# + clientConfig - The http client endpoint configurations
 public type GTasksConfiguration record {
-    http:ClientEndpointConfig clientConfig;
+    string accessToken?;
+    string clientId;
+    string clientSecret;
+    string refreshToken;
+    http:ClientEndpointConfig clientConfig = {};
 };
 
 function Client.init(GTasksConfiguration gTasksConfig) {
-    http:AuthConfig? authConfig = gTasksConfig.clientConfig.auth;
-    if (authConfig is http:AuthConfig) {
-        authConfig.refreshUrl = REFRESH_URL;
-    }
+    string? accessToken = gTasksConfig["accessToken"];
+    string clientId = gTasksConfig.clientId;
+    string clientSecret = gTasksConfig.clientSecret;
+    string refreshToken = gTasksConfig.refreshToken;
+
+    http:AuthConfig authConfig = {
+        scheme: http:OAUTH2,
+        config: {
+            grantType: http:DIRECT_TOKEN,
+            config: {
+                accessToken: accessToken ?: EMPTY_STRING,
+                refreshConfig: {
+                    clientId: clientId,
+                    clientSecret: clientSecret,
+                    refreshToken: refreshToken,
+                    refreshUrl: REFRESH_URL
+                }
+            }
+        }
+    };
+
+    http:ClientEndpointConfig clientConfig = gTasksConfig.clientConfig;
+    clientConfig.auth = authConfig;
 }
 
 public remote function Client.listTaskLists() returns json|error {

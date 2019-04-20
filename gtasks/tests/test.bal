@@ -5,15 +5,10 @@ import ballerina/config;
 import ballerina/http;
 
 GTasksConfiguration gTasksConfig = {
-    clientConfig: {
-        auth: {
-            scheme: http:OAUTH2,
-            accessToken: config:getAsString("ACCESS_TOKEN"),
-            clientId: config:getAsString("CLIENT_ID"),
-            clientSecret: config:getAsString("CLIENT_SECRET"),
-            refreshToken: config:getAsString("REFRESH_TOKEN")
-        }
-    }
+    accessToken: config:getAsString("ACCESS_TOKEN"),
+    clientId: config:getAsString("CLIENT_ID"),
+    clientSecret: config:getAsString("CLIENT_SECRET"),
+    refreshToken: config:getAsString("REFRESH_TOKEN")
 };
 
 Client gTasksClient = new(gTasksConfig);
@@ -38,7 +33,7 @@ function testListTasks() {
     io:println("\n ---------------------------------------------------------------------------");
     log:printInfo("gTasksClient -> listTasks()");
 
-    var response = gTasksClient->listTasks("BallerinaDay");
+    var response = gTasksClient->listTasks("Ballerina Day");
     if (response is json) {
         io:println(response);
     } else {
@@ -55,18 +50,17 @@ function testUpdateTasks() {
 
     json task = {
         "kind": "tasks#task",
-        "id": "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
-        "etag": "\"FhCqMAsBrrKDkDLKevwtJykQ9I8/LTY2NDI3MjAyNQ\"",
-        "title": "[⏰] Lunch @ 1:00PM",
-        "updated": "2018-08-10T06:11:36.000Z",
-        "selfLink":
-        "https://www.googleapis.com/tasks/v1/lists/MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDow/tasks/MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1",
-        "position": "00000000000975315488",
+        "id": "MTU1MjQzOTg1MzM3OTk0MTU2MzQ6MjMxMjc4NDQ3NDA5Mjk3NTo2MTE2OTU3ODQwMzAxNzE4",
+        "etag": "\"84_7Cubo3y98GMV9bE3zQclHxhc/LTIwNDgyMDMwNTk\"",
+        "title": "[⏰] Lunch @ 2:00PM",
+        "updated": "2019-03-18T05:28:44.000Z",
+        "selfLink": "https://www.googleapis.com/tasks/v1/lists/MTU1MjQzOTg1MzM3OTk0MTU2MzQ6MjMxMjc4NDQ3NDA5Mjk3NTow/tasks/MTU1MjQzOTg1MzM3OTk0MTU2MzQ6MjMxMjc4NDQ3NDA5Mjk3NTo2MTE2OTU3ODQwMzAxNzE4",
+        "position": "00000000001610612734",
         "status": "needsAction"
     };
 
-    var response = gTasksClient->updateTask("BallerinaDay",
-        "MDQ4NzI4NjE3OTU0OTE0OTgwNTg6Mzg5Nzc4MDI4OTUyNzI2NDo5ODQ5ODA3NzAwODk5ODA1", task);
+    var response = gTasksClient->updateTask("Ballerina Day",
+        "MTU1MjQzOTg1MzM3OTk0MTU2MzQ6MjMxMjc4NDQ3NDA5Mjk3NTo2MTE2OTU3ODQwMzAxNzE4", task);
     if (response is json) {
         io:println(response);
     } else {
