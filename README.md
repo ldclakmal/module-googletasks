@@ -7,15 +7,15 @@ tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 auth
 
 | Ballerina Language Version  | Google Tasks API Version |
 |:---------------------------:|:------------------------:|
-| 0.991.0                     | v1                       |
+| 1.o                         | v1                       |
 
 ## Getting started
 
 > Refer the [Getting Started](https://ballerina.io/learn/getting-started/) guide to download and install Ballerina.
 
-Import the `chanakal/gtasks` module into the Ballerina project.
+Import the `ldclakmal/gtasks` module into the Ballerina project.
 ```ballerina
-import chanakal/gtasks;
+import ldclakmal/gtasks;
 ```
 Instantiate the connector by giving authentication details in the HTTP client config, which has built-in support for
 BasicAuth and OAuth 2.0. GTasks uses OAuth 2.0 to authenticate and authorize requests. The GTasks connector can be

@@ -7,11 +7,11 @@ tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 auth
 
 **Tasklists Operations**
 
-The `chanakal/gtasks` module contains list, get, insert, update, delete, patch operations related to Google TaskLists.
+The `ldclakmal/gtasks` module contains list, get, insert, update, delete, patch operations related to Google TaskLists.
 
 **Tasks Operations**
 
-The `chanakal/gtasks` module contains list, get, insert, update, delete, patch operations related to Google Tasks.
+The `ldclakmal/gtasks` module contains list, get, insert, update, delete, patch operations related to Google Tasks.
 
 ## Compatibility
 |                          |    Version     |
@@ -20,9 +20,10 @@ The `chanakal/gtasks` module contains list, get, insert, update, delete, patch o
 | Google Tasks API         | v1             |
 
 ## Sample
-Import the `chanakal/gtasks` module into the Ballerina project.
+
+Import the `ldclakmal/gtasks` module into the Ballerina project.
 ```ballerina
-import chanakal/gtasks;
+import ldclakmal/gtasks;
 ```
 Instantiate the connector by giving authentication details in the HTTP client config, which has built-in support for
 BasicAuth and OAuth 2.0. GTasks uses OAuth 2.0 to authenticate and authorize requests. The GTasks connector can be

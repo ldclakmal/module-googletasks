@@ -16,4 +16,4 @@ const string FORWARD_SLASH = "/";
 const string DASH_WITH_WHITE_SPACES_SYMBOL = " - ";
 
 // Error Codes
-const string GTASK_ERROR_CODE = "(chanakal/gtask)GTaskError";
+const string GTASK_ERROR_CODE = "(ldclakmal/gtask)Error";
