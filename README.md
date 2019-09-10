@@ -1,13 +1,12 @@
 # Google Tasks Connector
 
-The Google Tasks connector allows you to do operations like list, get, insert, update, delete, patch related to
-tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 authentication.
+The Google Tasks connector allows you to do operations like list, get, insert, update, delete, patch related to tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 authentication.
 
 ## Compatibility
 
 | Ballerina Language Version  | Google Tasks API Version |
 |:---------------------------:|:------------------------:|
-| 1.o                         | v1                       |
+| 1.0                         | v1                       |
 
 ## Getting started
 
@@ -56,7 +55,7 @@ The `listTaskLists` function returns the information about the task lists.
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        log:printError(response.detail()?.message.toString(), response);
     }
 ```
 
@@ -66,7 +65,7 @@ The `listTasks` function returns the information about the tasks of the given ta
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        log:printError(response.detail()?.message.toString(), response);
     }
 ```
 
@@ -91,6 +90,6 @@ The `updateTask` function returns the information about the updated task for the
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        log:printError(response.detail()?.message.toString(), response);
     }
 ```

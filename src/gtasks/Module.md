@@ -2,8 +2,7 @@ Connects to Google Tasks from Ballerina.
 
 # Module Overview
 
-The Google Tasks connector allows you to do operations like list, get, insert, update, delete, patch related to
-tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 authentication.
+The Google Tasks connector allows you to do operations like list, get, insert, update, delete, patch related to tasklists and tasks through the Google Tasks REST API. It handles OAuth 2.0 authentication.
 
 **Tasklists Operations**
 
@@ -16,7 +15,7 @@ The `ldclakmal/gtasks` module contains list, get, insert, update, delete, patch 
 ## Compatibility
 |                          |    Version     |
 |:------------------------:|:--------------:|
-| Ballerina Language       | 0.991.0        |
+| Ballerina Language       | 1.0            |
 | Google Tasks API         | v1             |
 
 ## Sample
@@ -25,6 +24,7 @@ Import the `ldclakmal/gtasks` module into the Ballerina project.
 ```ballerina
 import ldclakmal/gtasks;
 ```
+
 Instantiate the connector by giving authentication details in the HTTP client config, which has built-in support for
 BasicAuth and OAuth 2.0. GTasks uses OAuth 2.0 to authenticate and authorize requests. The GTasks connector can be
 minimally instantiated in the HTTP client config using the access token or using the client ID, client secret,
@@ -64,7 +64,7 @@ The `listTaskLists` function returns the information about the task lists.
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        log:printError(response.detail()?.message.toString(), response);
     }
 ```
 
@@ -74,7 +74,7 @@ The `listTasks` function returns the information about the tasks of the given ta
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        log:printError(response.detail()?.message.toString(), response);
     }
 ```
 
@@ -99,6 +99,6 @@ The `updateTask` function returns the information about the updated task for the
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        log:printError(response.detail()?.message.toString(), response);
     }
 ```
