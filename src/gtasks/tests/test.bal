@@ -2,7 +2,6 @@ import ballerina/io;
 import ballerina/log;
 import ballerina/test;
 import ballerina/config;
-import ballerina/http;
 
 GTasksConfiguration gTasksConfig = {
     accessToken: config:getAsString("ACCESS_TOKEN"),
@@ -13,7 +12,7 @@ GTasksConfiguration gTasksConfig = {
 
 Client gTasksClient = new(gTasksConfig);
 
-@test:Config
+@test:Config{}
 function testListTaskLists() {
     io:println("\n ---------------------------------------------------------------------------");
     log:printInfo("gTasksClient -> listTaskLists()");
@@ -22,7 +21,7 @@ function testListTaskLists() {
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        test:assertFail(msg = response.detail()?.message.toString());
     }
 }
 
@@ -37,7 +36,7 @@ function testListTasks() {
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        test:assertFail(msg = response.detail()?.message.toString());
     }
 }
 
@@ -64,6 +63,6 @@ function testUpdateTasks() {
     if (response is json) {
         io:println(response);
     } else {
-        test:assertFail(msg = <string>response.detail().message);
+        test:assertFail(msg = response.detail()?.message.toString());
     }
 }

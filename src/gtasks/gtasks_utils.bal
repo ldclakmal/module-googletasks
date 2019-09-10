@@ -1,4 +1,5 @@
 import ballerina/http;
+import ballerina/stringutils;
 
 # Check for HTTP response and if response is success parse HTTP response object into json and parse error otherwise.
 #
@@ -7,23 +8,19 @@ import ballerina/http;
 function parseResponseToJson(http:Response|error response) returns json|error {
     json result = {};
     if (response is http:Response) {
-        var jsonPayload = response.getJsonPayload();
+        var jsonPayload = <@untainted> response.getJsonPayload();
         if (jsonPayload is json) {
-            if (response.statusCode != http:OK_200 && response.statusCode != http:CREATED_201) {
-                map<string> details = { message: response.statusCode + WHITE_SPACE
-                    + response.reasonPhrase + DASH_WITH_WHITE_SPACES_SYMBOL + jsonPayload.toString() };
-                error err = error(GTASK_ERROR_CODE, details);
+            if (response.statusCode != http:STATUS_OK && response.statusCode != http:STATUS_CREATED) {
+                error err = error(GTASK_ERROR_CODE, message = response.statusCode.toString() + WHITE_SPACE + response.reasonPhrase + DASH_WITH_WHITE_SPACES_SYMBOL + jsonPayload.toString());
                 return err;
             }
             return jsonPayload;
         } else {
-            map<string> details = { message: "Error occurred when parsing response to json." };
-            error err = error(GTASK_ERROR_CODE, details);
+            error err = error(GTASK_ERROR_CODE, message = "Error occurred when parsing response to json.");
             return err;
         }
     } else {
-        map<string> details = { message: <string>response.detail().message };
-        error err = error(GTASK_ERROR_CODE, details);
+        error err = error(GTASK_ERROR_CODE, message = response.detail()?.message.toString());
         return err;
     }
 }
@@ -33,16 +30,11 @@ function parseResponseToJson(http:Response|error response) returns json|error {
 # + input - Input string to be validated
 # + return - Untainted string or `error` if it is not valid
 function getUntaintedStringIfValid(string input) returns @untainted string {
-    var matchResponse = input.matches(REGEX_STRING);
-    if (matchResponse is boolean) {
-        if (matchResponse) {
-            return input;
-        } else {
-            map<string> details = { message: "Validation error: Input '" + input + "' should be valid." };
-            error err = error(GTASK_ERROR_CODE, details);
-            panic err;
-        }
+    var matchResponse = stringutils:matches(input, REGEX_STRING);
+    if (matchResponse) {
+        return input;
     } else {
-        panic matchResponse;
+        error err = error(GTASK_ERROR_CODE, message = "Validation error: Input '" + input + "' should be valid.");
+        panic err;
     }
 }
