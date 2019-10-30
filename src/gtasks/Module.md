@@ -64,7 +64,7 @@ The `listTaskLists` function returns the information about the task lists.
     if (response is json) {
         io:println(response);
     } else {
-        log:printError(response.detail()?.message.toString(), response);
+        log:printError("Failed to list task-list", response);
     }
 ```
 
@@ -74,7 +74,7 @@ The `listTasks` function returns the information about the tasks of the given ta
     if (response is json) {
         io:println(response);
     } else {
-        log:printError(response.detail()?.message.toString(), response);
+        log:printError("Failed to list tasks", response);
     }
 ```
 
@@ -99,6 +99,6 @@ The `updateTask` function returns the information about the updated task for the
     if (response is json) {
         io:println(response);
     } else {
-        log:printError(response.detail()?.message.toString(), response);
+        log:printError("Failed to update task", response);
     }
 ```
